@@ -1,0 +1,90 @@
+{
+  "name": "Weekly sales report (reincarnated)",
+  "nodes": [
+    {
+      "id": "1bb3d7f2-ffc4-5a6b-a0b0-60c35106730d",
+      "name": "Schedule (from crontab)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * 1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "39a292fe-0736-5496-b8ae-6af9c8af7de8",
+      "name": "Generate Report",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        470,
+        300
+      ],
+      "parameters": {
+        "command": "print total"
+      },
+      "notes": "print total"
+    },
+    {
+      "id": "2da3dc96-d221-575b-9d41-c3a248231fa2",
+      "name": "Email owner",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        690,
+        300
+      ],
+      "parameters": {
+        "fromEmail": "robot@example.com",
+        "toEmail": "owner@example.com",
+        "subject": "Email owner",
+        "emailFormat": "text",
+        "text": "to owner@example.com subject Weekly sales report"
+      },
+      "notes": "to owner@example.com subject Weekly sales report"
+    }
+  ],
+  "connections": {
+    "Schedule (from crontab)": {
+      "main": [
+        [
+          {
+            "node": "Generate Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Report": {
+      "main": [
+        [
+          {
+            "node": "Email owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "generatedBy": "ghost-workflow-medium",
+    "source": "weekly_sales_report.py"
+  }
+}

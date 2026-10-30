@@ -1,0 +1,19 @@
+{
+  "workflow_name": "Weekly sales report",
+  "trigger": {
+    "type": "schedule",
+    "cron": "0 8 * * 1"
+  },
+  "steps": [
+    {
+      "kind": "command",
+      "name": "Generate Report",
+      "detail": "print total"
+    },
+    {
+      "kind": "email",
+      "name": "Email owner",
+      "detail": "to owner@example.com subject Weekly sales report"
+    }
+  ]
+}

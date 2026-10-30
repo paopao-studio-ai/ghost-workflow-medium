@@ -1,0 +1,34 @@
+{
+  "workflow_name": "Nightly Backup",
+  "trigger": {
+    "type": "schedule",
+    "cron": "0 3 * * *"
+  },
+  "steps": [
+    {
+      "kind": "command",
+      "name": "Dump database",
+      "detail": "mysqldump -u shop -p\"$DB_PASS\" shopdb > /tmp/shopdb_$(date +%Y%m%d).sql"
+    },
+    {
+      "kind": "command",
+      "name": "Create archive",
+      "detail": "tar czf /backup/shop_$(date +%Y%m%d).tar.gz /tmp/shopdb_$(date +%Y%m%d).sql /home/shop/invoices"
+    },
+    {
+      "kind": "command",
+      "name": "Copy to NAS",
+      "detail": "scp /backup/shop_$(date +%Y%m%d).tar.gz backup@192.168.1.20:/mnt/nas/shop/"
+    },
+    {
+      "kind": "command",
+      "name": "Clean old backups",
+      "detail": "find /backup -name \"shop_*.tar.gz\" -mtime +14 -delete"
+    },
+    {
+      "kind": "email",
+      "name": "Notify boss",
+      "detail": "to boss@example.com subject nightly backup ok"
+    }
+  ]
+}

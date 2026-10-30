@@ -1,0 +1,112 @@
+{
+  "name": "Disk Alert (reincarnated)",
+  "nodes": [
+    {
+      "id": "ac8221d5-8b3a-5541-aed1-ea9c82aabbd9",
+      "name": "Schedule (from crontab)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "*/30 * * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "75afde10-41d3-5988-b6a7-bb83f3215d6e",
+      "name": "Get disk usage",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        470,
+        300
+      ],
+      "parameters": {
+        "command": "df / | awk 'NR==2 {print $5}'"
+      },
+      "notes": "df / | awk 'NR==2 {print $5}'"
+    },
+    {
+      "id": "5945f993-a001-50d7-a05f-be026da9f34f",
+      "name": "Convert to percentage",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        690,
+        300
+      ],
+      "parameters": {
+        "jsCode": "// Ghost's intent: tr -d '%'\n// TODO: port the original logic here.\nreturn $input.all();"
+      },
+      "notes": "tr -d '%'"
+    },
+    {
+      "id": "295d24af-375c-5c7a-9659-7e558eb2fe0d",
+      "name": "Send alert to chat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        910,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://chat.example.com/hooks/ops-alerts"
+      },
+      "notes": "POST https://chat.example.com/hooks/ops-alerts -H 'Content-Type: application/json' -d \"{\"text\": \"Disk on $(hostname) is ${USAGE}% full\"}\""
+    }
+  ],
+  "connections": {
+    "Schedule (from crontab)": {
+      "main": [
+        [
+          {
+            "node": "Get disk usage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get disk usage": {
+      "main": [
+        [
+          {
+            "node": "Convert to percentage",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to percentage": {
+      "main": [
+        [
+          {
+            "node": "Send alert to chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "generatedBy": "ghost-workflow-medium",
+    "source": "disk_alert.sh"
+  }
+}

@@ -1,0 +1,17 @@
+# n8n 2.45.6 | user folder /workspace/tools/n8n/home
+$ n8n import:workflow --input=reborn_gemma3-4b/backup_cron_2009.json
+Importing 1 workflows...
+Successfully imported 1 workflow.
+$ n8n import:workflow --input=reborn_gemma3-4b/disk_alert.json
+Importing 1 workflows...
+Successfully imported 1 workflow.
+$ n8n import:workflow --input=reborn_gemma3-4b/weekly_sales_report.json
+Importing 1 workflows...
+Successfully imported 1 workflow.
+$ n8n list:workflow
+JS9uKfRODpm5JDQM|Daily Backup (reincarnated)
+yXSVl2AkgCU4qs2c|Disk Alert (reincarnated)
+vcEMiYlKnlGLDyrb|Weekly sales report (reincarnated)
+TTEXe7H6EsgRYGQ6|Nightly Backup (reincarnated)
+tSiahRJRQOxJVPfs|Disk Alert (reincarnated)
+zu0jz3XYcDkLaqCs|Weekly Sales Report (reincarnated)

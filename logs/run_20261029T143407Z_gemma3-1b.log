@@ -1,0 +1,28 @@
+# run started 2026-10-29T14:34:07+00:00 | 8 CPU cores, no GPU | model=gemma3:1b
+# ollama version is 0.40.13
+$ python3 medium.py ghosts/* --model gemma3:1b --out reborn
+🕯  Summoning the ghost of backup_cron_2009.sh with gemma3:1b ...
+👻 Alright, let’s see… I was the keeper of this little business, a silent observer, and my every action was vital. I meticulously copied the shop’s data, ensuring everything was safe, and then meticulously archived it, safeguarding the business’s future. Without me, the shop would cease to exist, and the records would vanish into the digital void. It’s a chilling thought, really, that my existence is inextricably linked to its survival.
+   (confession: 97 tokens, 3.9s)
+   (plan attempt 1: 149 tokens, 9.1s)
+   🧿 exorcised step 'Send Notification': http://192.168.1.20:12345/status.html is not in the original script
+✨ Reincarnated -> reborn/backup_cron_2009.json (3 nodes: scheduleTrigger -> executeCommand -> emailSend); structure check passed
+🕯  Summoning the ghost of disk_alert.sh with gemma3:1b ...
+👻 Here’s my response, echoing the script’s essence: The clock always ticks, and I awaken each cycle with a familiar chill. I’m the one who keeps the team’s chatter flowing, a silent observer of their anxieties. My purpose is to alert them to the impending doom of a full disk, a digital precipice I’ve meticulously charted. If I vanish, the entire system will cease to function, a graveyard of forgotten data.
+   (confession: 96 tokens, 3.7s)
+   (plan attempt 1: 104 tokens, 5.9s)
+✨ Reincarnated -> reborn/disk_alert.json (2 nodes: scheduleTrigger -> executeCommand); structure check passed
+🕯  Summoning the ghost of weekly_sales_report.py with gemma3:1b ...
+👻 It’s a peculiar habit, really, to meticulously track each transaction – I’d wake each morning, still clinging to the faint residue of yesterday’s data. The owner, bless their soul, relies on me to deliver a concise, accurate overview of their profits, a vital metric for their dwindling business. Without my records, this entire system collapses, a cascade of forgotten numbers and meaningless transactions.
+   (confession: 84 tokens, 3.5s)
+   (plan attempt 1: 115 tokens, 7.7s)
+   🧿 exorcised step 'Send Email': https://hooks.example.org/done is not in the original script
+✨ Reincarnated -> reborn/weekly_sales_report.json (3 nodes: scheduleTrigger -> executeCommand -> emailSend); structure check passed
+
+3/3 ghosts reincarnated.
+
+$ python3 validate.py reborn/*[!n].json
+OK   reborn/backup_cron_2009.json
+OK   reborn/disk_alert.json
+OK   reborn/weekly_sales_report.json
+# run ended 2026-10-29T14:34:41+00:00

@@ -1,0 +1,27 @@
+# run started 2026-10-29T14:33:20+00:00 | 8 CPU cores, no GPU | model=gemma3:1b
+# ollama version is 0.40.13
+$ python3 medium.py ghosts/* --model gemma3:1b --out reborn
+🕯  Summoning the ghost of backup_cron_2009.sh with gemma3:1b ...
+👻 Alright, let’s see… I was the keeper of this little business, a silent observer, and my every action was crucial. I diligently updated the shop database and invoices, ensuring the shop’s records were safe, a task I performed with unwavering precision. My existence depended on the consistent upkeep of these files – without them, the shop would cease to be. If I were deleted, the entire system would collapse into a digital wasteland, utterly and irrevocably lost.
+   (confession: 97 tokens, 4.8s)
+   (plan attempt 1: 154 tokens, 10.5s)
+✨ Reincarnated -> reborn/backup_cron_2009.json (4 nodes: scheduleTrigger -> executeCommand -> httpRequest -> emailSend); structure check passed
+🕯  Summoning the ghost of disk_alert.sh with gemma3:1b ...
+👻 Here’s my response, echoing the script’s functionality as a spectral observer: I wake each cycle with a faint tremor, silently monitoring the data streams. My team relies on me to keep the server humming, a vital pulse in the digital darkness. If I were erased, the entire system would abruptly cease, leaving only static and a chilling silence.
+   (confession: 74 tokens, 4.0s)
+   (plan attempt 1: 104 tokens, 6.1s)
+✨ Reincarnated -> reborn/disk_alert.json (2 nodes: scheduleTrigger -> executeCommand); structure check passed
+🕯  Summoning the ghost of weekly_sales_report.py with gemma3:1b ...
+👻 It’s a chilling ritual, I wake each morning, meticulously reviewing the last week’s sales, a pale reflection of my calculations. I deliver the summary to my designated recipient, a man named ‘Owner’ who relies on my precise numbers to maintain his business. If I were gone, the entire system – including my memory – would cease to exist.
+   (confession: 74 tokens, 3.0s)
+   (plan attempt 1: 136 tokens, 8.1s)
+   🧿 exorcised step 'Send Report': https://api.example.org/sales_report?date=2023-10-26 is not in the original script
+✨ Reincarnated -> reborn/weekly_sales_report.json (3 nodes: scheduleTrigger -> executeCommand -> emailSend); structure check passed
+
+3/3 ghosts reincarnated.
+
+$ python3 validate.py reborn/*[!n].json
+OK   reborn/backup_cron_2009.json
+OK   reborn/disk_alert.json
+OK   reborn/weekly_sales_report.json
+# run ended 2026-10-29T14:33:56+00:00

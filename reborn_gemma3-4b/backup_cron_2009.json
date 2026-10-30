@@ -1,0 +1,165 @@
+{
+  "name": "Nightly Backup (reincarnated)",
+  "nodes": [
+    {
+      "id": "5674c0c4-96e0-5a80-ba9e-9d265cde59ed",
+      "name": "Schedule (from crontab)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 3 * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "55bc6729-d568-5d4b-950e-94d79cf8ceac",
+      "name": "Dump database",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        470,
+        300
+      ],
+      "parameters": {
+        "command": "mysqldump -u shop -p\"$DB_PASS\" shopdb > /tmp/shopdb_$(date +%Y%m%d).sql"
+      },
+      "notes": "mysqldump -u shop -p\"$DB_PASS\" shopdb > /tmp/shopdb_$(date +%Y%m%d).sql"
+    },
+    {
+      "id": "ea21cd59-73fe-5123-b45c-f7499534af54",
+      "name": "Create archive",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        690,
+        300
+      ],
+      "parameters": {
+        "command": "tar czf /backup/shop_$(date +%Y%m%d).tar.gz /tmp/shopdb_$(date +%Y%m%d).sql /home/shop/invoices"
+      },
+      "notes": "tar czf /backup/shop_$(date +%Y%m%d).tar.gz /tmp/shopdb_$(date +%Y%m%d).sql /home/shop/invoices"
+    },
+    {
+      "id": "bf933769-a287-5644-8de0-a3093f3ff9c5",
+      "name": "Copy to NAS",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        910,
+        300
+      ],
+      "parameters": {
+        "command": "scp /backup/shop_$(date +%Y%m%d).tar.gz backup@192.168.1.20:/mnt/nas/shop/"
+      },
+      "notes": "scp /backup/shop_$(date +%Y%m%d).tar.gz backup@192.168.1.20:/mnt/nas/shop/"
+    },
+    {
+      "id": "8c40cbec-cef7-5a0d-9b8e-7cb7e16a9281",
+      "name": "Clean old backups",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1130,
+        300
+      ],
+      "parameters": {
+        "command": "find /backup -name \"shop_*.tar.gz\" -mtime +14 -delete"
+      },
+      "notes": "find /backup -name \"shop_*.tar.gz\" -mtime +14 -delete"
+    },
+    {
+      "id": "b74fc7fa-3d79-5f0c-a44e-914f647f9827",
+      "name": "Notify boss",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1350,
+        300
+      ],
+      "parameters": {
+        "fromEmail": "robot@example.com",
+        "toEmail": "boss@example.com",
+        "subject": "Notify boss",
+        "emailFormat": "text",
+        "text": "to boss@example.com subject nightly backup ok"
+      },
+      "notes": "to boss@example.com subject nightly backup ok"
+    }
+  ],
+  "connections": {
+    "Schedule (from crontab)": {
+      "main": [
+        [
+          {
+            "node": "Dump database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Dump database": {
+      "main": [
+        [
+          {
+            "node": "Create archive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create archive": {
+      "main": [
+        [
+          {
+            "node": "Copy to NAS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Copy to NAS": {
+      "main": [
+        [
+          {
+            "node": "Clean old backups",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clean old backups": {
+      "main": [
+        [
+          {
+            "node": "Notify boss",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "generatedBy": "ghost-workflow-medium",
+    "source": "backup_cron_2009.sh"
+  }
+}

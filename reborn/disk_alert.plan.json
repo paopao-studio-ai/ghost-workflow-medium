@@ -1,0 +1,14 @@
+{
+  "workflow_name": "Disk Alert",
+  "trigger": {
+    "type": "schedule",
+    "cron": "*/30 * * * *"
+  },
+  "steps": [
+    {
+      "kind": "command",
+      "name": "Ping Team Chat",
+      "detail": "curl -s -X POST -H 'Content-Type: application/json' -d \"{\"text\": \"Disk on $(hostname) is ${USAGE}% full\"\" https://chat.example.com/hooks/ops-alerts\"}"
+    }
+  ]
+}

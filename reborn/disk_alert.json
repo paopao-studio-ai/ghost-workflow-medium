@@ -1,0 +1,61 @@
+{
+  "name": "Disk Alert (reincarnated)",
+  "nodes": [
+    {
+      "id": "ac8221d5-8b3a-5541-aed1-ea9c82aabbd9",
+      "name": "Schedule (from crontab)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "*/30 * * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "7a1d0be0-24b8-5e33-98c0-15f68aec4dfd",
+      "name": "Ping Team Chat",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        470,
+        300
+      ],
+      "parameters": {
+        "command": "curl -s -X POST -H 'Content-Type: application/json' -d \"{\"text\": \"Disk on $(hostname) is ${USAGE}% full\"\" https://chat.example.com/hooks/ops-alerts\"}"
+      },
+      "notes": "curl -s -X POST -H 'Content-Type: application/json' -d \"{\"text\": \"Disk on $(hostname) is ${USAGE}% full\"\" https://chat.example.com/hooks/ops-alerts\"}"
+    }
+  ],
+  "connections": {
+    "Schedule (from crontab)": {
+      "main": [
+        [
+          {
+            "node": "Ping Team Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "generatedBy": "ghost-workflow-medium",
+    "source": "disk_alert.sh"
+  }
+}

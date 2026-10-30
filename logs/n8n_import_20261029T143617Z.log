@@ -1,0 +1,16 @@
+# n8n 2.45.6 | user folder /tmp/n8n-fresh-186647
+$ n8n import:workflow --input=reborn/backup_cron_2009.json
+Starting migration AddErrorColumnsToTestRuns1737715421462
+Finished migration AddErrorColumnsToTestRuns1737715421462
+Importing 1 workflows...
+Successfully imported 1 workflow.
+$ n8n import:workflow --input=reborn/disk_alert.json
+Importing 1 workflows...
+Successfully imported 1 workflow.
+$ n8n import:workflow --input=reborn/weekly_sales_report.json
+Importing 1 workflows...
+Successfully imported 1 workflow.
+$ n8n list:workflow
+0t2dKI5rZr33wfX0|Daily Backup (reincarnated)
+zaEmDMKMFIUM2EIv|Disk Alert (reincarnated)
+VYV9MWRGJzNpwDhm|Weekly sales report (reincarnated)

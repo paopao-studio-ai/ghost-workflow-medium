@@ -1,0 +1,3 @@
+# No third-party Python packages are required (standard library only).
+# Runtime dependency: Ollama (https://ollama.com) serving an open-weight Gemma model, e.g.
+#   ollama pull gemma3:1b

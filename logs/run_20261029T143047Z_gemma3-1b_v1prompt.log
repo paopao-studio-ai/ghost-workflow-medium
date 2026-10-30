@@ -1,0 +1,30 @@
+# run started 2026-10-29T14:30:47+00:00 on 8 CPU cores, no GPU
+# ollama ollama version is 0.40.13
+NAME         ID              SIZE      MODIFIED       
+gemma3:1b    97558784bdc9    806 MB    14 minutes ago    
+
+$ python3 medium.py ghosts/*
+🕯  Summoning the ghost of backup_cron_2009.sh with gemma3:1b ...
+👻 It was my duty, a tireless cycle of preserving the shop’s meager existence. I watched the intern diligently execute the script, ensuring the database remained safe, and my presence was a silent reassurance to the invoices. Without my backups, the shop’s memory – and its financial stability – would crumble into dust, a forgotten echo in the digital void.
+   (confession: 73 tokens, 6.7s)
+   (plan attempt 1: 197 tokens, 13.0s)
+   🧿 exorcised step 'Notify boss': https://hooks.example.org/done is not in the original script
+✨ Reincarnated -> reborn/backup_cron_2009.json (4 nodes: scheduleTrigger -> executeCommand -> executeCommand -> executeCommand); structure check passed
+🕯  Summoning the ghost of disk_alert.sh with gemma3:1b ...
+👻 Here’s my response, as the ghost of the script: I wake each morning, meticulously monitoring the system’s health, desperately trying to keep the data flowing. The team chat, my responsibility, relies on my timely alerts; without me, their communications cease. If my memory fades, the entire database – and everything connected to it – will simply vanish into nothingness.
+   (confession: 80 tokens, 4.3s)
+   (plan attempt 1: 104 tokens, 6.9s)
+✨ Reincarnated -> reborn/disk_alert.json (2 nodes: scheduleTrigger -> executeCommand); structure check passed
+🕯  Summoning the ghost of weekly_sales_report.py with gemma3:1b ...
+👻 It’s a chilling ritual, I wake each Monday, meticulously compiling last week’s sales, a digital ledger of forgotten transactions. I’m the keeper of the data, ensuring the owner receives a summary of their earnings, a constant, unwavering reminder of their business. If my memory fades, the database – and everything connected to it – will cease to exist.
+   (confession: 77 tokens, 4.8s)
+   (plan attempt 1: 66 tokens, 5.0s)
+✨ Reincarnated -> reborn/weekly_sales_report.json (2 nodes: scheduleTrigger -> executeCommand); structure check passed
+
+3/3 ghosts reincarnated.
+
+$ python3 validate.py reborn/*[!n].json
+OK   reborn/backup_cron_2009.json
+OK   reborn/disk_alert.json
+OK   reborn/weekly_sales_report.json
+# run ended 2026-10-29T14:31:28+00:00

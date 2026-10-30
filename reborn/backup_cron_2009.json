@@ -1,0 +1,90 @@
+{
+  "name": "Daily Backup (reincarnated)",
+  "nodes": [
+    {
+      "id": "5674c0c4-96e0-5a80-ba9e-9d265cde59ed",
+      "name": "Schedule (from crontab)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        250,
+        300
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 3 * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "dc40000c-a6f8-537b-8938-7ec2e6f1530c",
+      "name": "Backup Database",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        470,
+        300
+      ],
+      "parameters": {
+        "command": "mysqldump -u shop -p$DB_PASS shopdb > /tmp/shopdb_$DATE.sql"
+      },
+      "notes": "mysqldump -u shop -p$DB_PASS shopdb > /tmp/shopdb_$DATE.sql"
+    },
+    {
+      "id": "b5294379-a235-57ed-9450-f522cd7f9110",
+      "name": "Email Boss",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        690,
+        300
+      ],
+      "parameters": {
+        "fromEmail": "robot@example.com",
+        "toEmail": "boss@example.com",
+        "subject": "Email Boss",
+        "emailFormat": "text",
+        "text": "to boss@example.com subject Daily Backup ok"
+      },
+      "notes": "to boss@example.com subject Daily Backup ok"
+    }
+  ],
+  "connections": {
+    "Schedule (from crontab)": {
+      "main": [
+        [
+          {
+            "node": "Backup Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Backup Database": {
+      "main": [
+        [
+          {
+            "node": "Email Boss",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "generatedBy": "ghost-workflow-medium",
+    "source": "backup_cron_2009.sh"
+  }
+}

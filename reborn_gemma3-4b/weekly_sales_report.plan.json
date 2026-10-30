@@ -1,0 +1,14 @@
+{
+  "workflow_name": "Weekly Sales Report",
+  "trigger": {
+    "type": "schedule",
+    "cron": "0 8 * * 1"
+  },
+  "steps": [
+    {
+      "kind": "code",
+      "name": "Read orders",
+      "detail": "import csv, smtplib\nfrom email.mime.text import MIMEText\n\ntotal = 0.0\ncount = 0\nfor row in csv.DictReader(open('/data/exports/orders_last_week.csv')):\n    total += float(row['amount'])\n    count += 1\n\nbody = \"Orders: %d\\nRevenue: %.2f\" % (count, total)\nmsg = MIMEText(body)\nmsg['Subject'] = 'Weekly sales report'\nmsg['From'] = 'robot@example.com'\nmsg['To'] = 'owner@example.com'\ns = smtplib.SMTP('localhost')\ns.sendmail(msg['From'], [msg['To']], msg.as_string())\ns.quit()"
+    }
+  ]
+}

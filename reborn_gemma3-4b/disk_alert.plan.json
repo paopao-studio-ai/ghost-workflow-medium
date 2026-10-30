@@ -1,0 +1,24 @@
+{
+  "workflow_name": "Disk Alert",
+  "trigger": {
+    "type": "schedule",
+    "cron": "*/30 * * * *"
+  },
+  "steps": [
+    {
+      "kind": "command",
+      "name": "Get disk usage",
+      "detail": "df / | awk 'NR==2 {print $5}'"
+    },
+    {
+      "kind": "code",
+      "name": "Convert to percentage",
+      "detail": "tr -d '%'"
+    },
+    {
+      "kind": "http",
+      "name": "Send alert to chat",
+      "detail": "POST https://chat.example.com/hooks/ops-alerts -H 'Content-Type: application/json' -d \"{\"text\": \"Disk on $(hostname) is ${USAGE}% full\"}\""
+    }
+  ]
+}
